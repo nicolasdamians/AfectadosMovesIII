@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVES III - Vacío Legal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #fafafa;
+            min-height: 100vh;
+            padding: 40px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 50px;
+        }
+        
+        /* ==================== */
+        /* TIMELINE - DESKTOP   */
+        /* ==================== */
+        .timeline-container {
+            position: relative;
+            margin-bottom: 60px;
+        }
+        
+        .timeline-header {
+            display: flex;
+            margin-bottom: 20px;
+            padding-left: 180px;
+        }
+        
+        .month-label {
+            flex: 1;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .timeline-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        
+        .row-label {
+            width: 180px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding-right: 20px;
+            text-align: right;
+            color: #aaa;
+            flex-shrink: 0;
+        }
+        
+        .timeline-bar {
+            flex: 1;
+            height: 50px;
+            display: flex;
+            position: relative;
+            background: #1a1a1a;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0 8px;
+            position: relative;
+            transition: all 0.2s;
+        }
+        
+        .segment:hover {
+            filter: brightness(1.1);
+        }
+        
+        .segment-label {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Colors */
+        .green { background: #16a34a; color: white; }
+        .red { background: #dc2626; color: white; }
+        .orange { background: #ea580c; color: white; }
+        .gray { background: #374151; color: #9ca3af; }
+        .purple { background: #7c3aed; color: white; }
+        .blue { background: #2563eb; color: white; }
+        .yellow { background: #ca8a04; color: white; }
+        
+        /* Striped pattern for the void */
+        .void-zone {
+            background: repeating-linear-gradient(
+                45deg,
+                #dc2626,
+                #dc2626 10px,
+                #b91c1c 10px,
+                #b91c1c 20px
+            );
+            animation: stripe-move 1s linear infinite;
+            color: white;
+            font-weight: 700;
+        }
+        
+        @keyframes stripe-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 28px 0; }
+        }
+        
+        /* ==================== */
+        /* TIMELINE - MOBILE    */
+        /* ==================== */
+        .timeline-mobile {
+            display: none;
+        }
+        
+        .timeline-mobile-item {
+            background: #141414;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-left: 4px solid;
+        }
+        
+        .timeline-mobile-item.item-green { border-color: #16a34a; }
+        .timeline-mobile-item.item-purple { border-color: #7c3aed; }
+        .timeline-mobile-item.item-blue { border-color: #2563eb; }
+        .timeline-mobile-item.item-red { border-color: #dc2626; }
+        
+        .timeline-mobile-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timeline-mobile-item .dates {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 12px;
+        }
+        
+        .timeline-mobile-item .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-green { background: #16a34a; color: white; }
+        .status-gray { background: #374151; color: #9ca3af; }
+        .status-purple { background: #7c3aed; color: white; }
+        .status-orange { background: #ea580c; color: white; }
+        .status-blue { background: #2563eb; color: white; }
+        .status-red { 
+            background: repeating-linear-gradient(
+                45deg,
+                #dc2626,
+                #dc2626 10px,
+                #b91c1c 10px,
+                #b91c1c 20px
+            );
+            color: white; 
+        }
+        
+        /* ==================== */
+        /* SUMMARY CARDS        */
+        /* ==================== */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .summary-card {
+            background: #141414;
+            border-radius: 12px;
+            padding: 30px;
+            border-left: 4px solid;
+        }
+        
+        .card-green { border-color: #16a34a; }
+        .card-red { border-color: #dc2626; }
+        
+        .summary-card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .icon-green { background: #16a34a; }
+        .icon-red { background: #dc2626; }
+        
+        .summary-list {
+            list-style: none;
+        }
+        
+        .summary-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #222;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        
+        .summary-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-list strong {
+            color: #fff;
+        }
+        
+        /* ==================== */
+        /* LEGAL BOX            */
+        /* ==================== */
+        .legal-box {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border-radius: 12px;
+            padding: 35px;
+            margin-top: 50px;
+            border: 1px solid #4338ca;
+        }
+        
+        .legal-box h2 {
+            color: #a5b4fc;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .legal-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #e0e7ff;
+            margin-bottom: 15px;
+        }
+        
+        .legal-box .highlight {
+            background: #4338ca;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .tc-citations {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #4338ca;
+        }
+        
+        .tc-citations h3 {
+            color: #a5b4fc;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .citation {
+            background: rgba(67, 56, 202, 0.3);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #c7d2fe;
+        }
+        
+        .citation strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        /* ==================== */
+        /* STATS BAR            */
+        /* ==================== */
+        .stats-bar {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+            padding: 30px;
+            background: #141414;
+            border-radius: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        /* ==================== */
+        /* FOOTER               */
+        /* ==================== */
+        .footer-link {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .footer-link a {
+            color: #888;
+        }
+
+        /* ==================== */
+        /* PRINT STYLES         */
+        /* ==================== */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                padding: 20px;
+            }
+            .summary-card, .legal-box, .stats-bar {
+                background: #f5f5f5;
+                border: 1px solid #ccc;
+            }
+            .legal-box {
+                background: #f0f0ff;
+            }
+        }
+        
+        /* ==================== */
+        /* MOBILE RESPONSIVE    */
+        /* ==================== */
+        @media (max-width: 900px) {
+            body {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+            
+            /* Hide desktop timeline, show mobile */
+            .timeline-container {
+                display: none;
+            }
+            
+            .timeline-mobile {
+                display: block;
+                margin-bottom: 40px;
+            }
+            
+            /* Stack summary cards */
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-top: 30px;
+            }
+            
+            .summary-card {
+                padding: 24px;
+            }
+            
+            .summary-card h2 {
+                font-size: 1.1rem;
+            }
+            
+            .summary-list li {
+                font-size: 0.9rem;
+            }
+            
+            /* Legal box */
+            .legal-box {
+                padding: 24px;
+                margin-top: 30px;
+            }
+            
+            .legal-box h2 {
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+            
+            .legal-box p {
+                font-size: 1rem;
+            }
+            
+            .citation {
+                padding: 12px 16px;
+                font-size: 0.85rem;
+            }
+            
+            /* Stats bar - 2x2 grid on mobile */
+            .stats-bar {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 24px;
+                margin-top: 30px;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .summary-card {
+                padding: 20px;
+            }
+            
+            .summary-card h2 {
+                font-size: 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .legal-box {
+                padding: 20px;
+            }
+            
+            .legal-box h2 {
+                font-size: 0.9rem;
+            }
+            
+            .stats-bar {
+                padding: 20px;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MOVES III — El Vacío Legal</h1>
+        <p class="subtitle">Plataforma de Afectados por el MOVES III</p>
+        
+        <!-- ==================== -->
+        <!-- TIMELINE - DESKTOP   -->
+        <!-- ==================== -->
+        <div class="timeline-container">
+            <div class="timeline-header">
+                <div class="month-label">NOV 2024</div>
+                <div class="month-label">DIC 2024</div>
+                <div class="month-label">ENE 2025</div>
+                <div class="month-label">FEB 2025</div>
+            </div>
+            
+            <!-- MOVES 2024 -->
+            <div class="timeline-row">
+                <div class="row-label">MOVES 2024<br><small>(RD 266/2021)</small></div>
+                <div class="timeline-bar">
+                    <div class="segment green" style="width: 25%;">
+                        <span class="segment-label">VIGENTE</span>
+                    </div>
+                    <div class="segment green" style="width: 25%;">
+                        <span class="segment-label">VIGENTE</span>
+                    </div>
+                    <div class="segment gray" style="width: 25%;">
+                        <span class="segment-label">FIN</span>
+                    </div>
+                    <div class="segment gray" style="width: 25%;">
+                        <span class="segment-label">—</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RDL 9/2024 -->
+            <div class="timeline-row">
+                <div class="row-label">RDL 9/2024<br><small>(prórroga hasta jun-25)</small></div>
+                <div class="timeline-bar">
+                    <div class="segment gray" style="width: 25%;">
+                        <span class="segment-label">—</span>
+                    </div>
+                    <div class="segment gray" style="width: 17%;">
+                        <span class="segment-label">—</span>
+                    </div>
+                    <div class="segment purple" style="width: 8%;">
+                        <span class="segment-label">23/12</span>
+                    </div>
+                    <div class="segment purple" style="width: 19%;">
+                        <span class="segment-label">VIGENTE (1-22 ene)</span>
+                    </div>
+                    <div class="segment orange" style="width: 6%;">
+                        <span class="segment-label">DEROG</span>
+                    </div>
+                    <div class="segment gray" style="width: 25%;">
+                        <span class="segment-label">—</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MOVES 2025 -->
+            <div class="timeline-row">
+                <div class="row-label">MOVES 2025<br><small>(RDL 3/2025)</small></div>
+                <div class="timeline-bar">
+                    <div class="segment gray" style="width: 25%;">
+                        <span class="segment-label">—</span>
+                    </div>
+                    <div class="segment gray" style="width: 25%;">
+                        <span class="segment-label">—</span>
+                    </div>
+                    <div class="segment blue" style="width: 25%;">
+                        <span class="segment-label">DESDE 01/01/2025</span>
+                    </div>
+                    <div class="segment blue" style="width: 25%;">
+                        <span class="segment-label">VIGENTE</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AFECTADOS -->
+            <div class="timeline-row" style="margin-top: 30px;">
+                <div class="row-label" style="color: #dc2626; font-weight: 700;">AFECTADOS</div>
+                <div class="timeline-bar" style="height: 60px; background: transparent;">
+                    <div class="segment" style="width: 25%; background: transparent;"></div>
+                    <div class="segment gray" style="width: 17%;">
+                        <span class="segment-label">—</span>
+                    </div>
+                    <div class="segment void-zone" style="width: 8%;">
+                        <span class="segment-label"></span>
+                    </div>
+                    <div class="segment void-zone" style="width: 19%;">
+                        <span class="segment-label">VACÍO LEGAL</span>
+                    </div>
+                    <div class="segment gray" style="width: 6%;"></div>
+                    <div class="segment" style="width: 25%; background: transparent;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== -->
+        <!-- TIMELINE - MOBILE    -->
+        <!-- ==================== -->
+        <div class="timeline-mobile">
+            <div class="timeline-mobile-item item-green">
+                <h3>📗 MOVES 2024</h3>
+                <p class="dates">RD 266/2021 · Prorrogado por RDL 4/2024</p>
+                <span class="status status-green">Vigente hasta 31/12/2024</span>
+            </div>
+            
+            <div class="timeline-mobile-item item-purple">
+                <h3>📜 RDL 9/2024</h3>
+                <p class="dates">Prórroga hasta junio 2025</p>
+                <span class="status status-purple">Vigente 23/12/24 → 22/01/25</span>
+                <span class="status status-orange" style="margin-left: 8px;">Derogado</span>
+            </div>
+            
+            <div class="timeline-mobile-item item-blue">
+                <h3>📘 MOVES 2025</h3>
+                <p class="dates">RDL 3/2025</p>
+                <span class="status status-blue">Desde 01/01/2025</span>
+            </div>
+            
+            <div class="timeline-mobile-item item-red">
+                <h3>⚠️ AFECTADOS</h3>
+                <p class="dates">Compras dic 2024 + solicitud ene 2025</p>
+                <span class="status status-red">VACÍO LEGAL · 31 días</span>
+            </div>
+        </div>
+        
+        <!-- ==================== -->
+        <!-- SUMMARY CARDS        -->
+        <!-- ==================== -->
+        <div class="summary-grid">
+            <div class="summary-card card-green">
+                <h2><span class="icon icon-green">✓</span> DENTRO del MOVES 2024</h2>
+                <ul class="summary-list">
+                    <li><strong>Compra Y solicitud</strong> antes del 31/12/2024</li>
+                    <li>Documentación completada dentro de 2024</li>
+                    <li>Tramitación ordinaria sin problemas</li>
+                </ul>
+            </div>
+            
+            <div class="summary-card card-red">
+                <h2><span class="icon icon-red">✗</span> FUERA del MOVES 2024</h2>
+                <ul class="summary-list">
+                    <li><strong>Compra en diciembre, solicitud en enero</strong></li>
+                    <li>Paga y señal en diciembre, pago final en enero</li>
+                    <li>Vehículo recibido en enero</li>
+                </ul>
+            </div>
+            
+            <div class="summary-card card-green">
+                <h2><span class="icon icon-green">✓</span> DENTRO del MOVES 2025</h2>
+                <ul class="summary-list">
+                    <li><strong>Compra Y solicitud</strong> desde 01/01/2025</li>
+                    <li>Actuación completa en 2025</li>
+                    <li><strong>Sin relación con operaciones de 2024</strong></li>
+                </ul>
+            </div>
+            
+            <div class="summary-card card-red">
+                <h2><span class="icon icon-red">✗</span> FUERA del MOVES 2025</h2>
+                <ul class="summary-list">
+                    <li>Compra en 2024 (aunque sea 28-31 dic)</li>
+                    <li>Operación iniciada en 2024 pero finalizada en 2025 (ej. reserva en 2024)</li>
+                    <li><strong>El RDL 3/2025 solo cubre actuaciones desde 01/01/2025</strong></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- ==================== -->
+        <!-- LEGAL BOX            -->
+        <!-- ==================== -->
+        <div class="legal-box">
+            <h2>⚖️ Fundamento Jurídico Clave: Doctrina Ex Nunc</h2>
+            <p>
+                El <span class="highlight">RDL 9/2024</span> estuvo vigente desde el 23 de diciembre de 2024 hasta el 22 de enero de 2025.
+                Durante ese periodo, las solicitudes presentadas estaban amparadas por una norma válida.
+            </p>
+            <p>
+                La <strong>derogación de una norma no elimina los efectos que ya se habían producido</strong> durante su vigencia.
+                Esto es doctrina constitucional consolidada.
+            </p>
+            
+            <div class="tc-citations">
+                <h3>Sentencias del Tribunal Constitucional</h3>
+                <div class="citation">
+                    <strong>STC 6/1983, de 4 de febrero</strong>
+                    "La no convalidación del decreto-ley no implica la nulidad retroactiva de los efectos producidos mientras estuvo vigente."
+                </div>
+                <div class="citation">
+                    <strong>STC 111/1983, de 2 de diciembre</strong>
+                    "Los efectos jurídicos producidos por el decreto-ley durante su vigencia deben considerarse válidos y eficaces."
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== -->
+        <!-- STATS BAR            -->
+        <!-- ==================== -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-number">1.000+</div>
+                <div class="stat-label">Miembros en la plataforma</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">860</div>
+                <div class="stat-label">Afectados solo en Catalunya</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">0</div>
+                <div class="stat-label">BOEs con fecha límite 31/12</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">31</div>
+                <div class="stat-label">Días de vacío legal</div>
+            </div>
+        </div>
+        
+        <p class="footer-link">
+            Plataforma de Afectados por el MOVES III · <a href="https://afectadosmovesiii.org/">afectadosmovesiii.org</a>
+        </p>
+    </div>
+</body>
+</html>
