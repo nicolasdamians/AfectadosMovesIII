@@ -142,7 +142,7 @@
 
         /* Breaking News Banner */
         .breaking-news {
-            background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
+            background: linear-gradient(135deg, var(--color-accent) 0%, #059669 100%);
             color: white;
             padding: 12px 20px;
             border-radius: var(--radius);
@@ -152,12 +152,18 @@
             gap: 12px;
             font-weight: 600;
             font-size: 0.95rem;
-            animation: pulse-glow 2s ease-in-out infinite;
+            animation: pulse-glow-green 2s ease-in-out infinite;
+            text-decoration: none;
+            transition: transform 0.2s;
         }
 
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.4); }
-            50% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.6); }
+        .breaking-news:hover {
+            transform: translateY(-2px);
+        }
+
+        @keyframes pulse-glow-green {
+            0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
         }
 
         .breaking-news .badge {
@@ -363,6 +369,7 @@
         .card-icon.green { background: rgba(16, 185, 129, 0.15); }
         .card-icon.orange { background: rgba(245, 158, 11, 0.15); }
         .card-icon.red { background: rgba(239, 68, 68, 0.15); }
+        .card-icon.purple { background: rgba(139, 92, 246, 0.15); }
 
         .card h3 {
             font-size: 1.1rem;
@@ -373,6 +380,15 @@
         .card p {
             color: var(--color-text-muted);
             font-size: 0.95rem;
+        }
+
+        .card a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
         }
 
         /* Legal Box */
@@ -497,6 +513,49 @@
             border: none;
         }
 
+        /* Collaboration Box */
+        .collab-box {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .collab-box .collab-icon {
+            font-size: 2.5rem;
+        }
+
+        .collab-box .collab-content {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .collab-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .collab-box p {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .collab-box a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .collab-box a:hover {
+            text-decoration: underline;
+        }
+
         /* Contact */
         .contact-info {
             display: flex;
@@ -605,10 +664,10 @@
 
     <main>
         <section id="home">
-            <div class="breaking-news">
-                <span class="badge">Próximamente</span>
-                📺 Entrevista en TV3 sobre el caso MOVES III
-            </div>
+            <a href="https://www.youtube.com/watch?v=JJiIjMoZZX8" target="_blank" rel="noopener" class="breaking-news">
+                <span class="badge">Disponible</span>
+                📺 Entrevista en TV3 sobre el caso MOVES III – ¡Mírala ahora!
+            </a>
             
             <h1>Miles de ciudadanos atrapados en un vacío legal</h1>
             
@@ -725,6 +784,11 @@
                     <p>En agosto de 2024 nos reunimos con el IDAE. Les presentamos jurisprudencia, BOEs y número de afectados. El IDAE ha reconocido por escrito el "grave perjuicio a los interesados".</p>
                 </div>
                 <div class="card">
+                    <div class="card-icon purple">🏛️</div>
+                    <h3>Contacto parlamentario</h3>
+                    <p>Estamos en proceso de reunión con la <strong>diputada Inès Granollers</strong> para trasladar el caso al ámbito parlamentario y buscar soluciones legislativas.</p>
+                </div>
+                <div class="card">
                     <div class="card-icon green">⚖️</div>
                     <h3>Estudio jurídico</h3>
                     <p>Informe especializado del bufete Administrativando Abogados sobre responsabilidad patrimonial del Estado por funcionamiento anormal de la Administración.</p>
@@ -732,7 +796,7 @@
                <div class="card">
                     <div class="card-icon red">📺</div>
                     <h3>Difusión mediática</h3>
-                    <p>Entrevista confirmada con TV3. Cobertura en canales especializados. Comunidad activa en Telegram con más de 1.000 miembros.</p>
+                    <p>Entrevista en <a href="https://www.youtube.com/watch?v=JJiIjMoZZX8" target="_blank" rel="noopener">TV3</a> ya disponible. Cobertura en canales especializados. Comunidad activa en Telegram con más de 1.000 miembros.</p>
                 </div>
             </div>
         </section>
@@ -803,6 +867,27 @@
                     allowfullscreen
                     loading="lazy">
                 </iframe>
+            </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 10px; font-size: 1.1rem; color: var(--color-text-muted);">📺 Entrevista en TV3</h3>
+			<div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/JJiIjMoZZX8?rel=0" 
+                    title="Entrevista TV3 - Caso MOVES III" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    loading="lazy">
+                </iframe>
+            </div>
+
+            <!-- Colaboración ACMEIS -->
+            <div class="collab-box">
+                <div class="collab-icon">🤝</div>
+                <div class="collab-content">
+                    <h3>Colaboramos con ACMEIS</h3>
+                    <p>Trabajamos junto a la Asociación por un Cambio de Modelo Energético Independiente y Sostenible para impulsar soluciones conjuntas.</p>
+                    <a href="https://acmeis.org/" target="_blank" rel="noopener">Visitar ACMEIS →</a>
+                </div>
             </div>
              
             <h3 style="margin-top: 50px; margin-bottom: 10px; font-size: 1.1rem; color: var(--color-text-muted);">📄 BOEs clave</h3>
