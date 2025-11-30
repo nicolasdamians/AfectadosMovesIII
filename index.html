@@ -314,6 +314,11 @@
             box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
         }
 
+        .timeline-item.success::before {
+            background: var(--color-accent);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
         .timeline-date {
             font-size: 0.85rem;
             color: var(--color-primary);
@@ -325,12 +330,25 @@
             color: var(--color-danger);
         }
 
+        .timeline-item.success .timeline-date {
+            color: var(--color-accent);
+        }
+
         .timeline-content {
             color: var(--color-text-muted);
         }
 
         .timeline-content strong {
             color: var(--color-text);
+        }
+
+        .timeline-content a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .timeline-content a:hover {
+            text-decoration: underline;
         }
 
         /* Cards Grid */
@@ -739,6 +757,14 @@
                         excluyendo compras de diciembre con tramitación en enero.
                     </p>
                 </div>
+                <div class="timeline-item success">
+                    <div class="timeline-date">Octubre 2025</div>
+                    <p class="timeline-content">
+                        <strong>Baleares crea fondo propio</strong> para compensar a los afectados por el vacío legal. 
+                        Primer gobierno autonómico en reconocer el problema y actuar. 
+                        <a href="https://www.caib.es/pidip2front/jsp/es/ficha-convocatoria/el-govern-de-les-illes-balears-destina-fondos-propios-para-compensar-a-la-ciudadania-afectada-por-el-vacio-legal-del-moves-iii" target="_blank" rel="noopener">Ver convocatoria</a>
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -792,6 +818,11 @@
                     <div class="card-icon green">⚖️</div>
                     <h3>Estudio jurídico</h3>
                     <p>Informe especializado del bufete Administrativando Abogados sobre responsabilidad patrimonial del Estado por funcionamiento anormal de la Administración.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon orange">🏝️</div>
+                    <h3>Precedente en Baleares</h3>
+                    <p>El Govern de les Illes Balears ha destinado <strong>fondos propios</strong> para compensar a los afectados por el vacío legal del MOVES III. <a href="https://www.caib.es/pidip2front/jsp/es/ficha-convocatoria/el-govern-de-les-illes-balears-destina-fondos-propios-para-compensar-a-la-ciudadania-afectada-por-el-vacio-legal-del-moves-iii" target="_blank" rel="noopener">Ver convocatoria</a></p>
                 </div>
                <div class="card">
                     <div class="card-icon red">📺</div>
